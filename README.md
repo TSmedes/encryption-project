@@ -48,6 +48,8 @@ To decrypt a file:
 ./encrypt -d encrypted.txt decrypted_message.txt
 ```
 
+Example messages to verify encryption and decryption are available in the `test_messages` folder.
+
 ## Implementation Details
 
 ### Encryption
