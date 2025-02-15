@@ -1,0 +1,3 @@
+This is a longer test message that contains multiple paragraphs and special characters: @#$%^&*()!
+
+It includes numbers like 12345 and symbols like €£¥, which will help test how the encryption handles various types of characters.
