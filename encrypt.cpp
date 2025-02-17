@@ -5,65 +5,67 @@
 
 using std::cout;
 using std::cerr;
+using std::cin;
 using std::string;
 using std::exception;
 
 void printUsage() {
-    cout << "Usage: ./encrypt [-e|-d] <input_file> <output_file> <key_file>\n";
-    cout << "       ./encrypt -g <key_file>\n";
-    cout << "  -e: encrypt mode\n";
-    cout << "  -d: decrypt mode\n";
-    cout << "  -g: generate a new encryption key\n";
+    cout << "1. Generate a new encryption key\n";
+    cout << "2. Encrypt a file with XOR\n";
+    cout << "3. Decrypt a file with XOR\n";
+    cout << "4. Encrypt a file with Shift\n";
+    cout << "5. Decrypt a file with Shift\n";
+    cout << "Enter your choice (1-5): ";
 }
 
-int main(int argc, char* argv[]) {
+int main() {
     try {
-        // Not enough arguments
-        if (argc < 2) {
-            printUsage();
-            return 1;
-        }
+        int choice;
+        printUsage();
+        cin >> choice;
 
-        string mode = argv[1];
-
-        // Generate a new encryption key
-        if (mode == "-g") {
-            if (argc != 3) {
-                cerr << "Error: Key generation requires a key file path.\n";
-                printUsage();
-                return 1;
-            }
-            string keyFile = argv[2];
+        if (choice == 1) {
+            string keyFile;
+            cout << "Enter key file name: ";
+            cin >> keyFile;
             EncryptionHandler::generateKey(keyFile);
             cout << "Key generated successfully and saved to: " << keyFile << "\n";
-            return 0;
-        }
+        } 
+        else if (choice == 2 || choice == 3) {
+            string inputFile, outputFile, keyFile;
+            cout << "Enter input file name: ";
+            cin >> inputFile;
+            cout << "Enter output file name: ";
+            cin >> outputFile;
+            cout << "Enter key file name: ";
+            cin >> keyFile;
 
-        if (argc != 5) {
-            printUsage();
+            bool isEncrypt = (choice == 2);
+            EncryptionHandler::processFileXOR(inputFile, outputFile, keyFile, isEncrypt);
+            cout << (isEncrypt ? "Encryption" : "Decryption") << " completed successfully.\n";
+        } 
+        else if (choice == 4 || choice == 5) {
+            string inputFile, outputFile, keyFile;
+            cout << "Enter input file name: ";
+            cin >> inputFile;
+            cout << "Enter output file name: ";
+            cin >> outputFile;
+            cout << "Enter key file name: ";
+            cin >> keyFile;
+
+            bool isEncrypt = (choice == 4);
+            EncryptionHandler::processFileShift(inputFile, outputFile, keyFile, isEncrypt);
+            cout << (isEncrypt ? "Encryption" : "Decryption") << " completed successfully.\n";
+        } 
+        else {
+            cerr << "Invalid choice. Please restart the program and enter a valid option.\n";
             return 1;
         }
 
-        string inputFile = argv[2];
-        string outputFile = argv[3];
-        string keyFile = argv[4];
-
-        if (mode != "-e" && mode != "-d") {
-            std::cerr << "Error: Invalid mode. Use -e for encryption or -d for decryption.\n";
-            printUsage();
-            return 1;
-        }
-
-        // Encrypt or decrypt mode
-        bool isEncrypt = (mode == "-e");
-        EncryptionHandler::processFile(inputFile, outputFile, keyFile, isEncrypt);
-
-        // Print success message
-        std::cout << (isEncrypt ? "Encryption" : "Decryption") << " completed successfully.\n";
         return 0;
-
-    } catch (const exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
+    } 
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << "\n";
         return 1;
     }
 }

@@ -8,11 +8,14 @@ using std::string;
 class EncryptionHandler {
 private:
     static unsigned char readKeyFromFile(const string& keyFile);
-    static char encryptChar(char c, unsigned char key);
-    static char decryptChar(char c, unsigned char key);
+    static char encryptCharXOR(char c, unsigned char key);
+    static char decryptCharXOR(char c, unsigned char key);
+    static char encryptCharShift(char c, char key);
+    static char decryptCharShift(char c, char key);
 
 public:
-    static void processFile(const string& inputFile, const string& outputFile, const string& keyFile, bool isEncrypt);
+    static void processFileXOR(const string& inputFile, const string& outputFile, const string& keyFile, bool isEncrypt);
+    static void processFileShift(const string& inputFile, const string& outputFile, const string& keyFile, bool isEncrypt);
     static void generateKey(const string& keyFile);
 };
 

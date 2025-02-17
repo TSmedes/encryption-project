@@ -1,6 +1,6 @@
 # Encryption Project
 
-A simple command-line tool for encrypting and decrypting text files using a XOR cipher.
+A simple command-line tool for encrypting and decrypting text files using a XOR cipher and Vigenère cipher.
 
 ## Usage
 
@@ -16,49 +16,59 @@ g++ -o encrypt encrypt.cpp encryption_handler.cpp
 
 The following commands are available:
 
-```bash
-./encrypt -g <key_file>
-
-./encrypt [-e|-d] <input_file> <output_file> <key_file>
-```
 
 Options:
 
-- `-g`: Generate a new key
-- `-e`: Encrypt the input file
-- `-d`: Decrypt the input file
+1: Generate a new encryption key
+2: Encrypt a file with XOR
+3: Decrypt a file with XOR
+4: Encrypt a file with Shift
+5: Decrypt a file with Shift
 
 ### Examples
 
 To generate a new key:
 
 ```bash
-./encrypt -g key.txt
+1
+key.txt
 ```
 
 To encrypt a file:
 
 ```bash
-./encrypt -e message.txt encrypted_message.txt
+2 or 4
+message.txt 
+encrypted_message.txt
 ```
 
 To decrypt a file:
 
 ```bash
-./encrypt -d encrypted.txt decrypted_message.txt
+3 or 5
+encrypted_message.txt
+decrypted_message.txt
 ```
 
 Example messages to verify encryption and decryption are available in the `test_messages` folder.
 
 ## Implementation Details
 
-### Encryption
+### EncryptionXOR
 
 The program uses an XOR cipher. Every bit of the message file is XORed with each bit in the key.
 
-### Decryption
+### DecryptionXOR
 
 XOR is a symmetric operation, and can be performed again to decrypt.
+
+### EncryptionShift
+
+The program uses a Vigenere cipher, a polyalphabetic cipher made up of 26 distinct cipher alphabets in a Vigenère square.
+
+### DecryptionShift
+
+Vigenere is a symmetric operation and can be performed with the same key to decrypt.
 
 ### Key Generation
 
